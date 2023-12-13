@@ -7,7 +7,7 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 
 router.get('/',articleController.getArticleAll); 
-router.get('/:idArticle',articleController.getArticle)
+router.get('/:idArticle',articleController.getArticle);
 
 
 module. exports = router;
