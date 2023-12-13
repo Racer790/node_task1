@@ -1,0 +1,26 @@
+{
+  "name": "ganin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Racer790/node_task1.git"
+  },
+  "author": "andrey",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Racer790/node_task1/issues"
+  },
+  "homepage": "https://github.com/Racer790/node_task1#readme",
+  "devDependencies": {
+    "body-parser": "^1.20.2",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "mysql2": "^3.6.5",
+    "nodemon": "^3.0.2"
+  }
+}
