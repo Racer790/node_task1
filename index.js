@@ -21,4 +21,8 @@ app.use('/article', article);
 let admin = require('./routes/admin');
 app.use('/admin', admin);
 
+// Маршрут для новостей
+let news = require('./routes/news');
+app.use('/news', news);
+
 app.listen(3000);

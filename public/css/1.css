@@ -6,6 +6,7 @@ body {
     padding: 0;
 }
 
+
 /* Стили для статей */
 #articleTitle {
     border: 2px solid #e74c3c; 
@@ -35,6 +36,36 @@ body {
     border: 2px solid #3498db;
     padding: 10px;
     margin-top: 10px;
+}
+
+/* Стили новостей */
+/* public/css/style.css */
+
+/* Стили для списка новостей (newsList.ejs) */
+
+#newsTitle {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+}
+
+#newsDescription {
+    color: #555;
+}
+
+/* Стили для полного просмотра новости (newsDetail.ejs) */
+#newsText {
+    font-size: 1.2em;
+    line-height: 1.6;
+    color: #333;
+    max-width: 800px; /* Ограничиваем ширину текста до 800px */
+    margin: 0 auto; /* Центрируем текст по горизонтали */
+}
+#newsDTitle {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
 }
 
 /* Стили для форм добавления и редактирования статьи */

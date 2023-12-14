@@ -3,7 +3,6 @@ const Models = require("../models/adminModel.js");
 exports.getArticleAll = async function(req, res){
     let m=await Models.getAll(); 
     res.render('adminArticles', {data:m});
-    
 };
 
 exports.getArticle = async function(req, res){ 
