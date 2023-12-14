@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/1.css">
+</head>
+<body>
+    <% data.forEach(function(item) { %>
+<p><a href='http://localhost:3000/admin/<%= item.idArticle %>'><%= item.titleArticle %> </a>
+    <p>
+        <%= item.descriptionArticle %>
+    </p> 
+    <% }); %>
+
+    <div class="form">
+        <h2>Добавить статью</h2>
+
+    <form action="http://localhost:3000/admin/addArticle" method="post"> 
+        <label for="titleArticle">Название статьи</label> 
+        <input type="text" name="titleArticle" id="titleArticle" required> 
+        <p>
+            <label for="textArticle">Текст статьи</label>
+            <textarea rows="10" cols="30" id="textArticle"></textarea> 
+        </p> 
+        <p>
+            <label for="descriptionArticle">Описание статьи</label>
+            <input type="text" name="descriptionArticle" id="descriptionArticle">
+        </p>
+        <button type="submit" id="sendArticle">Создать статью</button> 
+    </form>
+    <script>
+        document.querySelector("#sendArticle").onclick=function()
+        {
+            event.stopPropagation();
+            let article={
+                'titleArticle':document.querySelector("#titleArticle").value, 
+                'textArticle':document.querySelector("#textArticle").value, 
+                'descriptionArticle':document.querySelector("#descriptionArticle").value,
+        }
+        let promise=fetch('http://localhost:3000/admin/addArticle',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify(article)
+            });
+        }
+        </script>
+</body>
+</html>
