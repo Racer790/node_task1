@@ -5,66 +5,86 @@
     <link rel="stylesheet" href="/css/1.css">
 </head>
 <body>
-    <%= data[0].titleArticle %>
-    <p>
-        <%=data[0].textArticle %>
-    </p>   
+    <div id="articleContent">
+        <div id="articleTitle"><%= data[0].titleArticle %></div>
+        <p id="articleText">
+            <%= data[0].textArticle %>
+        </p>
+    </div>
     <div class="form">
-    <h2>Изменить статью</h2>
-        <form action="http://localhost:3000/admin/editArticle" method="post">
-            <label for="titleArticle">Название статьи</label> 
-            <input type="text" name="titleArticle" id="titleArticle" required value="<%= data[0].titleArticle %>"> 
+        <h2>Изменить статью</h2>
+        <form id="editArticleForm" action="http://localhost:3000/admin/editArticle" method="post">
+            <label for="titleArticle">Название статьи</label>
+            <input type="text" name="titleArticle" id="titleArticle" required value="<%= data[0].titleArticle %>">
             <p>
                 <label for="textArticle">Текст статьи</label>
                 <textarea rows="10" cols="30" name="textArticle" id="textArticle"><%= data[0].textArticle %></textarea>
-            </p> 
+            </p>
             <p>
                 <label for="descriptionArticle">Описание статьи</label>
                 <input type="text" name="descriptionArticle" id="descriptionArticle" value="<%= data[0].descriptionArticle %>">
             </p>
             <button type="submit" id="sendArticle">Редактировать статью</button>
-            <button type="submit" id="deleteArticle">Удалить статью</button>
+            <button type="button" id="deleteArticle">Удалить статью</button>
             <p><a href="http://localhost:3000/admin/">Вернуться к списку статей</a></p>
         </form>
     </div>
     <script>
-        document.querySelector("#sendArticle").onclick=function() {
+        document.querySelector("#sendArticle").onclick = async function(event) {
             event.preventDefault();
-            let article={
-                'idArticle':location.href.split("/").at(-1),
-                'titleArticle':document.querySelector("#titleArticle").value,
-                'textArticle':document.querySelector("#textArticle").innerHTML,
+            let article = {
+                'idArticle': location.href.split("/").at(-1),
+                'titleArticle': document.querySelector("#titleArticle").value,
+                'textArticle': document.querySelector("#textArticle").value,
                 'descriptionArticle': document.querySelector("#descriptionArticle").value,
-            }
-            let promise=fetch('http://localhost:3000/admin/editArticle',{
+            };
+
+            try {
+                const response = await fetch('http://localhost:3000/admin/editArticle', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json;charset=utf-8'
                     },
                     body: JSON.stringify(article)
-        })
-        .then(response=> alert("Данные изменены"))
-        .catch(response => alert("error"+response));
-    };
+                });
+
+                if (response.ok) {
+                    alert("Данные изменены");
+
+                    // Загрузка обновленных данных и их отображение на странице
+                    const updatedDataResponse = await fetch(`http://localhost:3000/article/${article.idArticle}`);
+                    const updatedData = await updatedDataResponse.text();
+
+                    // Замена содержимого элемента с id "articleContent" на обновленные данные
+                    document.getElementById('articleContent').innerHTML = updatedData;
+                } else {
+                    alert("Ошибка при изменении данных");
+                }
+            } catch (error) {
+                alert("Ошибка: " + error);
+            }
+        };
     </script>
     <script>
-        document.querySelector("#deleteArticle").onclick=function() 
-        {
+        document.querySelector("#deleteArticle").onclick = function(event) {
             event.preventDefault();
-            let article={
-                'idArticle':location.href.split("/").at(-1),
-            }
-            let promise=fetch('http://localhost:3000/admin/deleteArticle',{ 
+            if (confirm("Вы уверены, что хотите удалить эту статью?")) {
+            let article = {
+                'idArticle': location.href.split("/").at(-1),
+            };
+            let promise = fetch('http://localhost:3000/admin/deleteArticle', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8'
-                }, body: JSON.stringify(article)
+                },
+                body: JSON.stringify(article)
             })
-            .then(response=> document.location="http://localhost:3000/admin/") 
-            .catch((error) => {
-                console.log(error);
-            });
+                .then(response => document.location = "http://localhost:3000/admin/")
+                .catch((error) => {
+                    console.log(error);
+                });
+            }
         }
-        </script>
+    </script>
 </body>
 </html>
