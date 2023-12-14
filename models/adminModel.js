@@ -4,7 +4,7 @@ const connection = require("../mysql.js");
 exports.getAll=async function(req,res){
     let arr=[];
     await connection.query("SELECT * FROM article")
-    then(data=> {
+    .then(data=> {
         for (let i=0;i<data[0].length;i++)
         {
             arr[i]=data[0][i];
@@ -21,7 +21,7 @@ exports.getOne=async function(req,res){
     let sql="select * from article where idArticle=?";
     filter=[req];
     await connection.query(sql,filter)
-    then(data=> {
+    .then(data=> {
         for (let i=0;i<data[0].length;i++)
         {
             arr[i]=data[0][i];
@@ -32,12 +32,12 @@ exports.getOne=async function(req,res){
     });
     return arr;
 }
-exports.add0ne=async function(req,res){
+exports.addOne=async function(req,res){
 
     let sql="insert into article values('',?,?,?)";
     filter=[req.titleArticle, req.textArticle, req.descriptionArticle];
     await connection.query(sql,filter)
-    then(data=> {
+    .then(data=> {
     })
     .catch(err =>{
         console.log(err);

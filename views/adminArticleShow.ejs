@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/1.css">
+</head>
+<body>
+    <%= data[0].titleArticle %>
+    <p>
+        <%=data[0].textArticle %>
+    </p>   
+    <div class="form">
+    <h2>Изменить статью</h2>
+        <form action="http://localhost:3000/admin/editArticle" method="post">
+            <label for="titleArticle">Название статьи</label> 
+            <input type="text" name="titleArticle" id="titleArticle" required value="<%= data[0].titleArticle %>"> 
+            <p>
+                <label for="textArticle">Текст статьи</label>
+                <textarea rows="10" cols="30" name="textArticle" id="textArticle"><%= data[0].textArticle %></textarea>
+            </p> 
+            <p>
+                <label for="descriptionArticle">Описание статьи</label>
+                <input type="text" name="descriptionArticle" id="descriptionArticle" value="<%= data[0].descriptionArticle %>">
+            </p>
+            <button type="submit" id="sendArticle">Редактировать статью</button>
+            <button type="submit" id="deleteArticle">Удалить статью</button>
+            <p><a href="http://localhost:3000/admin/">Вернуться к списку статей</a></p>
+        </form>
+    </div>
+    <script>
+        document.querySelector("#sendArticle").onclick=function() {
+            event.preventDefault();
+            let article={
+                'idArticle':location.href.split("/").at(-1),
+                'titleArticle':document.querySelector("#titleArticle").value,
+                'textArticle':document.querySelector("#textArticle").innerHTML,
+                'descriptionArticle': document.querySelector("#descriptionArticle").value,
+            }
+            let promise=fetch('http://localhost:3000/admin/editArticle',{
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    body: JSON.stringify(article)
+        })
+        .then(response=> alert("Данные изменены"))
+        .catch(response => alert("error"+response));
+    };
+    </script>
+    <script>
+        document.querySelector("#deleteArticle").onclick=function() 
+        {
+            event.preventDefault();
+            let article={
+                'idArticle':location.href.split("/").at(-1),
+            }
+            let promise=fetch('http://localhost:3000/admin/deleteArticle',{ 
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                }, body: JSON.stringify(article)
+            })
+            .then(response=> document.location="http://localhost:3000/admin/") 
+            .catch((error) => {
+                console.log(error);
+            });
+        }
+        </script>
+</body>
+</html>
