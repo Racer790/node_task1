@@ -6,8 +6,8 @@
 </head>
 <body>
     <% data.forEach(function(item) { %>
-<p><a href='http://localhost:3000/article/<%= item.idArticle %>'><%= item.titleArticle %> </a>
-    <p>
+    <p id="articlesTitle"><a href='http://localhost:3000/article/<%= item.idArticle %>'><%= item.titleArticle %> </a> </p>
+    <p id="articlesDescription">
         <%= item.descriptionArticle %>
     </p>
     <% }); %>
