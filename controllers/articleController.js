@@ -9,7 +9,7 @@ exports.getArticleAll = async function(req, res){
 };
 
 exports.getArticle = async function(req, res){ 
-    console.log(req. params); 
+    console.log(req.params); 
     let m=await Models.getOne(req.params.idArticle);
     res.render('articleShow', {data:m});
 };
